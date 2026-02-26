@@ -33,7 +33,7 @@
 		<li>Tap the ${hi}check button</span> to end or skip your turn.</li>
 		<li>Unused tray cards are ${hi}recycled</span>, and the tray is refilled from the deck.</li>
 		</ul>
-		${p}Game ends when ${hi}no more</span> cards can be drawn or the ${hi}maximum</span> number of pairs is reached.</span>
+		${p}Game ends when ${hi}no more</span> cards can be drawn ${hi}or</span> the ${hi}maximum</span> number of pairs is reached.</span>
 	`;
 </script>
 

@@ -1,6 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import { MODE_SELF, MODE_PRACITCE } from './const';
+	import { MODE_SELF } from './const';
 	import { onMode } from './shared.svelte';
 	import { ss } from './state.svelte';
 	import TextButton from './Text Button.svelte';
@@ -68,7 +68,6 @@
 	}
 
 	.grad-text {
-		/* background: -webkit-linear-gradient(-90deg, var(--ow) 0%, var(--ow) 30%, var(--gold) 60%, var(--gold) 100%); */
 		background: -webkit-linear-gradient(-90deg, #ede2c5, #b6a678 50%);
 		background-clip: text;
 		-webkit-background-clip: text;

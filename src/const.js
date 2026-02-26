@@ -1,5 +1,5 @@
 
-export const APP_STATE = 'ACE IN PLACE V3';
+export const APP_STATE = 'SUITED V1';
 export const PROMPT_TRANSITION = 300;
 export const PROMPT_PLAY_AGAIN = 'play again?';
 export const PROMPT_RESET_STATS = 'reset stats?';

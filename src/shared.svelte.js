@@ -1,7 +1,7 @@
 import { keys, sampleSize } from 'lodash-es';
 import { SvelteSet } from 'svelte/reactivity';
 import { CARDS } from './Cards';
-import { APP_STATE, LEVEL_SECS, MAX_STRIKES, MODE_PRACITCE, PROMPT_PLAY_AGAIN, TASKS_PER_LEVEL, TICK_MS } from './const';
+import { APP_STATE, LEVEL_SECS, MAX_STRIKES, PROMPT_PLAY_AGAIN, TASKS_PER_LEVEL, TICK_MS } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
 import { _range, post, shuffleInPlace } from './utils';
@@ -30,15 +30,6 @@ const loadCommon = () => {
     if (job) {
         _sound.sfx = job.sfx;
         _sound.music = job.music;
-    }
-};
-
-const loadPracticeOps = () => {
-    const json = localStorage.getItem(appKey());
-    const job = JSON.parse(json);
-
-    if (job) {
-        ss.largePractice = job.largePractice;
     }
 };
 
@@ -332,34 +323,20 @@ export const onMode = (mode) => {
     _prompt.opacity = 0;
 
     ss.mode = mode;
-    ss.practice = mode === MODE_PRACITCE;
 
-    if (ss.practice) {
-        loadPracticeOps();
-
-        ss.cols = ss.largePractice ? 5 : 4;
-        ss.rows = ss.largePractice ? 4 : 3;
-    } else {
-        ss.cols = 5;
-        ss.rows = 4;
-    }
-
+    ss.cols = 12;
+    ss.rows = 8;
     ss.cellCount = ss.cols * ss.rows;
+    ss.traySize = 5;
 
     _sound.play('plop');
 
     loadCommon();
 
-    if (ss.practice) {
-        makePuzzle();
-    } else {
-        loadGame();
+    loadGame();
 
-        if (!ss.cells) {
-            doMakePuzzle();
-        }
-
-        ss.levelPrompt = true;
+    if (!ss.cells) {
+        // doMakePuzzle();
     }
 
     delete ss.home;

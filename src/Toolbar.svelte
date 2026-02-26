@@ -1,13 +1,15 @@
 <script>
+	import Check from '$lib/images/Check.webp';
+	import Deck from '$lib/images/Deck.webp';
 	import Home from '$lib/images/Home.webp';
 	import MusicOff from '$lib/images/Music Off.webp';
 	import MusicOn from '$lib/images/Music On.webp';
-	import Pause from '$lib/images/Pause.webp';
 	import Stats from '$lib/images/Reset Stats.webp';
+	import Restart from '$lib/images/Restart.webp';
 	import SoundOff from '$lib/images/Sound Off.webp';
 	import SoundOn from '$lib/images/Sound On.webp';
 	import { MODE_SELF, PROMPT_RESET_STATS } from './const';
-	import { onMode, persist, showIntro, stopTimer } from './shared.svelte';
+	import { onMode, persist, showIntro } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, _stats, ss } from './state.svelte';
 	import ToolButton from './Tool Button.svelte';
@@ -16,9 +18,16 @@
 		showIntro(true);
 	};
 
-	const onPause = () => {
-		stopTimer();
+	const onRestart = () => {
 		onMode(MODE_SELF);
+	};
+
+	const onDeck = () => {
+		_sound.play('plop');
+	};
+
+	const onCheck = () => {
+		_sound.play('plop');
 	};
 
 	const onResetStats = () => {
@@ -56,10 +65,10 @@
 
 <div class="toolbar">
 	<ToolButton id="tb-home" src={Home} onClick={onHome} />
-	{#if !ss.practice}
-		<ToolButton id="tb-pause" src={Pause} onClick={onPause} disabled={!ss.timer} />
-		<ToolButton id="tb-stats" src={Stats} onClick={onResetStats} disabled={_stats.plays === 0 || ss.timer} />
-	{/if}
+	<ToolButton id="tb-restart" src={Restart} onClick={onRestart} />
+	<ToolButton id="tb-deck" src={Deck} onClick={onDeck} />
+	<ToolButton id="tb-check" src={Check} onClick={onCheck} />
+	<ToolButton id="tb-stats" src={Stats} onClick={onResetStats} disabled={_stats.plays === 0 || ss.timer} />
 	<ToolButton id="tb-sfx" src={_sound.sfx ? SoundOn : SoundOff} onClick={onSound} />
 	<ToolButton id="tb-music" src={_sound.music ? MusicOn : MusicOff} onClick={onMusic} />
 </div>
@@ -71,6 +80,6 @@
 		grid-auto-flow: column;
 		place-content: center;
 		align-items: center;
-		gap: 15px;
+		gap: 25px;
 	}
 </style>

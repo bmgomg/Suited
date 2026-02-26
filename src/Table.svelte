@@ -9,11 +9,13 @@
 	<div class="row"><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /></div>
 	<div class="row"><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /></div>
 	<div class="row"><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /></div>
+	<div class="row"><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /></div>
+	<div class="row"><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /><Cell /></div>
 </div>
 
 <style>
 	.table {
-		grid-area: 3/1;
+		grid-area: 2/1;
 		display: grid;
 		place-content: center;
 	}

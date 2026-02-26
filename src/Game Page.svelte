@@ -27,7 +27,7 @@
 	.game-page {
 		grid-area: 1/1;
 		display: grid;
-		grid: 70px 120px 660px 50px / auto;
+		grid: 110px 740px 50px / auto;
 		/* gap: 10px; */
 		width: 100%;
 		transition: opacity 0.2s;

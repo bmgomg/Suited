@@ -13,7 +13,7 @@
 
 <style>
 	.tray {
-		grid-area: 2/1;
+		grid-area: 1/1;
 		display: grid;
 		grid-auto-flow: column;
         place-content: center;

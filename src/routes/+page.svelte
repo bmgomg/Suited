@@ -18,8 +18,8 @@
 
 			const r = clientRect('.app');
 
-			if (r.width < 1000) {
-				scx = r.width / 1000;
+			if (r.width < 900) {
+				scx = r.width / 900;
 			}
 
 			if (r.height < 900) {
@@ -78,9 +78,9 @@
 		display: grid;
 		touch-action: none;
 		box-sizing: border-box;
-		width: 1000px;
+		width: 900px;
 		height: 900px;
-		border: 1px dotted #ffffff40;
+		/* border: 1px dotted #ffffff40; */
 	}
 
 	.disclaimer {

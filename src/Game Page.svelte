@@ -1,6 +1,8 @@
 <script>
 	import { ss } from './state.svelte';
+	import Table from './Table.svelte';
 	import Toolbar from './Toolbar.svelte';
+	import Tray from './Tray.svelte';
 
 	const hidden = $derived(ss.home);
 </script>
@@ -16,6 +18,8 @@
 	<Timer secs={secsRemained()} />
 	<Ranks/>
 	<Prompt/> -->
+	<Tray />
+	<Table />
 	<Toolbar />
 </div>
 

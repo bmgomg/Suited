@@ -61,5 +61,10 @@
 			font-family: Playfair;
 			src: url('$lib/fonts/Playfair Display.ttf');
 		}
+
+		@font-face {
+			font-family: Poppins;
+			src: url('$lib/fonts/Poppins.ttf');
+		}
 	}
 </style>

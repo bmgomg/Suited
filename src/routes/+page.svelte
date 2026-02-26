@@ -80,7 +80,7 @@
 		box-sizing: border-box;
 		width: 900px;
 		height: 900px;
-		/* border: 1px dotted #ffffff40; */
+		border: 1px dotted #ffffff40;
 	}
 
 	.disclaimer {

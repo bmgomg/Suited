@@ -6,7 +6,7 @@
 	import Stats from '$lib/images/Reset Stats.webp';
 	import SoundOff from '$lib/images/Sound Off.webp';
 	import SoundOn from '$lib/images/Sound On.webp';
-	import { MODE_CHALLENGE, PROMPT_RESET_STATS } from './const';
+	import { MODE_SELF, PROMPT_RESET_STATS } from './const';
 	import { onMode, persist, showIntro, stopTimer } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, _stats, ss } from './state.svelte';
@@ -18,7 +18,7 @@
 
 	const onPause = () => {
 		stopTimer();
-		onMode(MODE_CHALLENGE);
+		onMode(MODE_SELF);
 	};
 
 	const onResetStats = () => {

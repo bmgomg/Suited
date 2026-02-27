@@ -3,6 +3,7 @@
 	import { CELL_MARGIN, CELL_WIDTH } from './const';
 	import { _sound } from './sound.svelte';
 	import { _prompt, ss } from './state.svelte';
+	import { clientRect } from './utils';
 
 	const { cell } = $props();
 	const { index, code, tray } = $derived(cell);
@@ -57,7 +58,30 @@
 		return () => _this.removeEventListener('transitionend', onTransitionEnd);
 	});
 
-	const style = $derived(`grid-area: ${row}/${col}; width: ${CELL_WIDTH}px; margin: ${CELL_MARGIN}px;`);
+	const off = $derived.by(() => {
+		if (!ss.from || !ss.to) {
+			return [0, 0];
+		}
+
+		if (id !== ss.from && id !== ss.to) {
+			return [0, 0];
+		}
+
+		const r1 = clientRect('#' + ss.from);
+		const r2 = clientRect('#' + ss.to);
+
+		const dx = r2.x - r1.x;
+		const dy = r2.y - r1.y;
+
+		return [dx, dy];
+	});
+
+	const zi = $derived(id === ss.from ? 1 : 0);
+	const duration = $derived(ss.from ? '1s' : '0s');
+
+	const style = $derived(
+		`grid-area: ${row}/${col}; width: ${CELL_WIDTH}px; margin: ${CELL_MARGIN}px;  z-index: ${zi};`
+	);
 
 	const disabled = $derived.by(() => {
 		if (!ss.from) {
@@ -68,10 +92,10 @@
 	});
 </script>
 
-<div {id} bind:this={_this} class="cell {id === ss.from ? 'pulse' : ''} {disabled ? 'disabled' : ''}" {style} onpointerdown={onPointerDown}>
+<div {id} bind:this={_this} class="cell {disabled ? 'disabled' : ''}" {style} onpointerdown={onPointerDown}>
 	<div class="spot"></div>
 	{#if code}
-		<div class="card">
+		<div class="card {id === ss.from && !ss.to ? 'pulse' : ''}" style='translate: {off[0]}px {off[1]}px; transition-duration: {duration};'>
 			<img src={img} alt="" width="100%" />
 		</div>
 	{/if}

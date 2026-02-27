@@ -6,7 +6,7 @@
 
 	const { cell } = $props();
 	const { index, code, tray } = $derived(cell);
-	const id = $derived(`cell-${index}${tray ? '-tray' : ''}`);
+	const id = $derived(`${tray ? 'tray' : 'cell'}-${index}`);
 	let _this = $state(null);
 	const { row, col } = $derived(rowCol(index));
 

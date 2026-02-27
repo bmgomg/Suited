@@ -73,12 +73,9 @@
 			};
 
 			let cob = findCell(ss.from);
-
-			const cells = [...ss.cells];
 			const i = +ss.to.split('-')[1];
-			cells[i].code = cob.code;
 
-			ss.cells = cells;
+			ss.cells[i].code = cob.code;
 			cob.code = 0;
 
 			delete ss.from;

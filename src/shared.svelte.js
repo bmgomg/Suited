@@ -117,16 +117,22 @@ export const inGoodPlace = (idx, codes) => {
 };
 
 const makeTray = () => {
-    ss.tray = sampleSize(ss.deck, ss.traySize).map((code, i) => ({ code, index: -i }));
+    const count = Math.min(ss.traySize, ss.deck.length);
+    const hand = sampleSize(ss.deck, count);
+
+    for (let i = 0; i < count; i++) {
+        ss.tray[i].code = hand[i];
+    }
+
     ss.deck = ss.deck.filter(code => !ss.tray.some(c => c.code === code));
 };
 
 export const makePuzzle = () => {
     ss.cells = Array(ss.cellCount).fill(null).map((_, index) => ({ code: 0, index }));
-
     ss.deck = Object.keys(CARDS).map(k => +k);
-    makeTray();
+    ss.tray = Array(ss.traySize).fill(null).map((_, index) => ({ code: 0, index, tray: true }));
 
+    makeTray();
     onStart();
 };
 

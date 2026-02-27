@@ -1,6 +1,7 @@
 <script>
 	import { CARDS } from './Cards';
 	import { CELL_MARGIN, CELL_WIDTH } from './const';
+	import { _log } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, ss } from './state.svelte';
 	import { clientRect } from './utils';
@@ -46,12 +47,42 @@
 	};
 
 	$effect(() => {
+		if (id === 'cell-4') {
+			_log(ss.cells);
+		}
+	});
+
+	$effect(() => {
 		const onTransitionEnd = (e) => {
 			if (e.propertyName !== 'translate') {
 				return;
 			}
 
-			//
+			if (ss.from !== id || !ss.to) {
+				return;
+			}
+
+			_sound.play('cluck');
+
+			const findCell = (id) => {
+				const parts = id.split('-');
+				const cells = parts[0] === 'tray' ? ss.tray : ss.cells;
+				const prefix = parts[0] + '-';
+
+				return cells.find((c) => prefix + c.index === id);
+			};
+
+			let cob = findCell(ss.from);
+
+			const cells = [...ss.cells];
+			const i = +ss.to.split('-')[1];
+			cells[i].code = cob.code;
+
+			ss.cells = cells;
+			cob.code = 0;
+
+			delete ss.from;
+			delete ss.to;
 		};
 
 		_this.addEventListener('transitionend', onTransitionEnd);
@@ -77,11 +108,9 @@
 	});
 
 	const zi = $derived(id === ss.from ? 1 : 0);
-	const duration = $derived(ss.from ? '1s' : '0s');
+	const duration = $derived(ss.from ? '0.5s' : '0s');
 
-	const style = $derived(
-		`grid-area: ${row}/${col}; width: ${CELL_WIDTH}px; margin: ${CELL_MARGIN}px;  z-index: ${zi};`
-	);
+	const style = $derived(`grid-area: ${row}/${col}; width: ${CELL_WIDTH}px; margin: ${CELL_MARGIN}px;  z-index: ${zi};`);
 
 	const disabled = $derived.by(() => {
 		if (!ss.from) {
@@ -95,7 +124,7 @@
 <div {id} bind:this={_this} class="cell {disabled ? 'disabled' : ''}" {style} onpointerdown={onPointerDown}>
 	<div class="spot"></div>
 	{#if code}
-		<div class="card {id === ss.from && !ss.to ? 'pulse' : ''}" style='translate: {off[0]}px {off[1]}px; transition-duration: {duration};'>
+		<div class="card {id === ss.from && !ss.to ? 'pulse' : ''}" style="translate: {off[0]}px {off[1]}px; transition-duration: {duration};">
 			<img src={img} alt="" width="100%" />
 		</div>
 	{/if}

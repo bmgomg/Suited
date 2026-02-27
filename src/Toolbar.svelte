@@ -8,8 +8,8 @@
 	import Restart from '$lib/images/Restart.webp';
 	import SoundOff from '$lib/images/Sound Off.webp';
 	import SoundOn from '$lib/images/Sound On.webp';
-	import { MODE_SELF, PROMPT_RESET_STATS } from './const';
-	import { onMode, persist, showIntro } from './shared.svelte';
+	import { PROMPT_RESET_STATS } from './const';
+	import { deckCodes, makePuzzle, persist, refillTray, showIntro } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, _stats, ss } from './state.svelte';
 	import ToolButton from './Tool Button.svelte';
@@ -19,7 +19,7 @@
 	};
 
 	const onRestart = () => {
-		onMode(MODE_SELF);
+		makePuzzle();
 	};
 
 	const onDeck = () => {
@@ -28,6 +28,7 @@
 
 	const onCheck = () => {
 		_sound.play('plop');
+		refillTray();
 	};
 
 	const onResetStats = () => {
@@ -61,12 +62,17 @@
 
 		persist();
 	};
+
+	const count = $derived(deckCodes().length);
 </script>
 
 <div class="toolbar">
 	<ToolButton id="tb-home" src={Home} onClick={onHome} />
 	<ToolButton id="tb-restart" src={Restart} onClick={onRestart} />
-	<ToolButton id="tb-deck" src={Deck} onClick={onDeck} />
+	<div class="deck">
+		<div style="grid-area: 1/1;"><ToolButton id="tb-deck" src={Deck} onClick={onDeck} /></div>
+		<div class='deck-counter'>{count}</div>
+	</div>
 	<ToolButton id="tb-check" src={Check} onClick={onCheck} />
 	<ToolButton id="tb-stats" src={Stats} onClick={onResetStats} disabled={_stats.plays === 0 || ss.timer} />
 	<ToolButton id="tb-sfx" src={_sound.sfx ? SoundOn : SoundOff} onClick={onSound} />
@@ -81,5 +87,21 @@
 		place-content: center;
 		align-items: center;
 		gap: 25px;
+	}
+
+	.deck {
+		display: grid;
+	}
+
+	.deck-counter {
+		grid-area: 1/1;
+		place-self: center;
+		margin-left: 8px;
+		font-family: RC;
+		font-size: 13px;
+		color: var(--water);
+		z-index: 1;
+		display: grid;
+		place-content: center;
 	}
 </style>

@@ -19,10 +19,10 @@
 			width: 100%;
 			--ow: #f9f9f7;
 			--water: #2c3a49;
-            --aqua: #adffe4;
-            --gold: #ffe4aa;
-            --red: #ff0000;
-            --background: #202020;
+			--aqua: #adffe4;
+			--gold: #ffe4aa;
+			--red: #ff0000;
+			--background: #202020;
 			background: var(--background);
 			color: var(--ow);
 			background-image: url('$lib/images/Texture.webp');
@@ -65,6 +65,11 @@
 		@font-face {
 			font-family: Poppins;
 			src: url('$lib/fonts/Poppins.ttf');
+		}
+
+		@font-face {
+			font-family: 'RC';
+			src: url('$lib/fonts/Roboto Condensed.ttf');
 		}
 	}
 </style>

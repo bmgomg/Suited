@@ -17,5 +17,6 @@
 		place-self: center;
 		display: grid;
 		grid-auto-flow: column;
+		z-index: 1;
 	}
 </style>

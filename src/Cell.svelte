@@ -1,7 +1,7 @@
 <script>
 	import { CARDS } from './Cards';
 	import { CELL_MARGIN, CELL_WIDTH } from './const';
-	import { _log } from './shared.svelte';
+	import { persist } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, ss } from './state.svelte';
 	import { clientRect } from './utils';
@@ -47,12 +47,6 @@
 	};
 
 	$effect(() => {
-		if (id === 'cell-4') {
-			_log(ss.cells);
-		}
-	});
-
-	$effect(() => {
 		const onTransitionEnd = (e) => {
 			if (e.propertyName !== 'translate') {
 				return;
@@ -80,6 +74,8 @@
 
 			delete ss.from;
 			delete ss.to;
+
+			persist();
 		};
 
 		_this.addEventListener('transitionend', onTransitionEnd);
@@ -87,6 +83,10 @@
 	});
 
 	const off = $derived.by(() => {
+		if (tray && ss.clearTray) {
+			return [0, -200];
+		}
+
 		if (!ss.from || !ss.to) {
 			return [0, 0];
 		}
@@ -105,7 +105,7 @@
 	});
 
 	const zi = $derived(id === ss.from ? 1 : 0);
-	const duration = $derived(ss.from ? '0.5s' : '0s');
+	const duration = $derived(ss.from || ss.clearTray ? '0.5s' : '0s');
 
 	const style = $derived(`grid-area: ${row}/${col}; width: ${CELL_WIDTH}px; margin: ${CELL_MARGIN}px;  z-index: ${zi};`);
 

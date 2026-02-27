@@ -116,20 +116,33 @@ export const inGoodPlace = (idx, codes) => {
     return false;
 };
 
+export const refillTray = () => {
+    ss.clearTray = true;
+    const delay = ss.tray.some(c => c.code) ? 500 : 0;
+
+    post(() => {
+        ss.tray.forEach(c => c.code = 0);
+        delete ss.clearTray;
+        makeTray();
+    }, delay);
+};
+
+export const deckCodes = () => Object.keys(CARDS).map(k => +k).filter(code => !ss.tray?.some(c => c.code === code) && !ss.cells?.some(c => c.code === code));
+
 const makeTray = () => {
-    const count = Math.min(ss.traySize, ss.deck.length);
-    const hand = sampleSize(ss.deck, count);
+    const deck = deckCodes();
+    const count = Math.min(ss.traySize, deck.length);
+    const hand = sampleSize(deck, count);
 
     for (let i = 0; i < count; i++) {
         ss.tray[i].code = hand[i];
     }
 
-    ss.deck = ss.deck.filter(code => !ss.tray.some(c => c.code === code));
+    persist();
 };
 
 export const makePuzzle = () => {
     ss.cells = Array(ss.cellCount).fill(null).map((_, index) => ({ code: 0, index }));
-    ss.deck = Object.keys(CARDS).map(k => +k);
     ss.tray = Array(ss.traySize).fill(null).map((_, index) => ({ code: 0, index, tray: true }));
 
     makeTray();
